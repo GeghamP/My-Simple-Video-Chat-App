@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { Segment } from 'semantic-ui-react';
 import MediaPermissionHander from '../handlers/MediaPermissionHander';
 import Pusher from 'pusher-js';
 import Peer from 'simple-peer';
@@ -22,7 +21,7 @@ export default class App extends Component {
 		this.setPusher = this.setPusher.bind(this);
 		this.startPeer = this.startPeer.bind(this);
 		this.callUser = this.callUser.bind(this);
-		this.closeUser = this.closeUser.bind(this);
+		this.endCall = this.endCall.bind(this);
 		
 		this.setPusher();
 	}
@@ -121,7 +120,7 @@ export default class App extends Component {
 	}
 	
 	
-	closeUser(id){
+	endCall(id){
 		const peer = this.peers[id];
 		peer.destroy();
 	}
@@ -134,7 +133,7 @@ export default class App extends Component {
 					return (user.id != this.props.userId) ? 
 						<div key = {user.id}>
 							<button onClick = {() => this.callUser(user.id)}> call to {user.id}</button> 
-							<button onClick = {() => this.closeUser(user.id)}> close </button> 
+							<button onClick = {() => this.endCall(user.id)}> end </button> 
 						</div>
 						: null;
 				})}
