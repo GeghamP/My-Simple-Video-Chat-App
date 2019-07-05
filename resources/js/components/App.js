@@ -21,6 +21,7 @@ export default class App extends Component {
 		this.setPusher = this.setPusher.bind(this);
 		this.startPeer = this.startPeer.bind(this);
 		this.callUser = this.callUser.bind(this);
+		this.closeUser = this.closeUser.bind(this);
 		
 		this.setPusher();
 	}
@@ -41,8 +42,8 @@ export default class App extends Component {
 	}
 	
 	setPusher(){
-		//console.log('calling setPusher');
 		//Pusher.logToConsole = true;
+		
 		this.pusher = new Pusher('2b99ea80122390530f7e', {
 			authEndpoint: "/VideoChat/public/pusher/auth",
 			cluster: 'ap2',
@@ -77,7 +78,6 @@ export default class App extends Component {
 		});
 		
 		peer.on('signal',(data) => {
-			console.log(data);
 			this.channel.trigger(`client-signal-${id}`,{
 				type: 'signal',
 				userId: this.props.userId,
@@ -96,28 +96,37 @@ export default class App extends Component {
 		});
 		
 		peer.on('close',() => {
-			let peer = this.peers[userId];
+			let peer = this.peers[id];
 			if(peer !== undefined){
 				peer.destroy();
 			}
 			
-			this.peers[userId] = undefined;
+			this.peers[id] = undefined;
 		});
 			
 		return peer;
 	}
 	
 	callUser(id){
-		console.log(`called to ${id}`);
 		this.peers[id] = this.startPeer(id);
 	}
 	
+	
+	closeUser(id){
+		const peer = this.peers[id];
+		peer.destroy();
+	}
+	
     render() {
-		console.log(this.props);
         return (
 			<div>
 				{[1,2].map((id) => {
-					return (id != this.props.userId) ? <button onClick = {() => this.callUser(id)} key = {id}> call to {id}</button> : null;
+					return (id != this.props.userId) ? 
+						<div key = {id}>
+							<button onClick = {() => this.callUser(id)}> call to {id}</button> 
+							<button onClick = {() => this.closeUser(id)}> close </button> 
+						</div>
+						: null;
 				})}
 				<div className = "video__container">
 					<video className = "__from" controls ref = {(ref) => {this.from = ref}}></video>
