@@ -1,0 +1,38 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.video__container{
+	width: 600px;
+	height: 400px;
+	margin: 0px auto;
+	border: 3px solid #aaadb3;
+	position: relative;
+	box-shadow: 1px 1px 20px #ced1d6;
+	
+	.__from{
+		width: 200px;
+		position: absolute;
+		right: 10px;
+		top: 20px;
+		border: 5px solid #171ead;
+		border-radius: 5px;
+		z-index: 1;
+	}
+	
+	.__to{
+		width: 100%;
+		height: 100%;
+		left: 0px;
+		top: 0px;
+		right: 0px;
+		bottom: 0px;
+		position: absolute;
+		z-index: 0;
+	}
+}
