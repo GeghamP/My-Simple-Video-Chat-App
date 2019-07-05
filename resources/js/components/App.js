@@ -11,6 +11,7 @@ export default class App extends Component {
 		super(props);
 		
 		this.state = {
+			users: [],
 			isMediaAvailable: false,
 			toUserId: null
 		};
@@ -26,7 +27,15 @@ export default class App extends Component {
 		this.setPusher();
 	}
 	
+	componentDidMount(){
+		axios.get('/VideoChat/public/users').
+			then((res) => {
+				this.setState({users: res.data});
+			});
+	}
+	
 	componentWillMount(){
+		
 		this.mediaPermissionHander.getUserPermissions()
 			.then((stream) => {
 				this.setState({isMediaAvailable: true});
@@ -118,13 +127,14 @@ export default class App extends Component {
 	}
 	
     render() {
+		console.log(this.state.users);
         return (
 			<div>
-				{[1,2].map((id) => {
-					return (id != this.props.userId) ? 
-						<div key = {id}>
-							<button onClick = {() => this.callUser(id)}> call to {id}</button> 
-							<button onClick = {() => this.closeUser(id)}> close </button> 
+				{this.state.users.map((user) => {
+					return (user.id != this.props.userId) ? 
+						<div key = {user.id}>
+							<button onClick = {() => this.callUser(user.id)}> call to {user.id}</button> 
+							<button onClick = {() => this.closeUser(user.id)}> close </button> 
 						</div>
 						: null;
 				})}

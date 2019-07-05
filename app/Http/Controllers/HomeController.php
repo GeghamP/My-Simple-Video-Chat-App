@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -38,5 +39,11 @@ class HomeController extends Controller
 		$key = $pusher->presence_auth($channel, $socket, Auth::user()->id, $data);
 		
 		return response($key);
+	}
+	
+	public function getUsers(){
+		$users = User::all();
+		
+		return response()->json($users);
 	}
 }
