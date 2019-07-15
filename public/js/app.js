@@ -78227,6 +78227,7 @@ function (_Component) {
             toUserId: signal.userId
           });
 
+          alert('You have an incoming call');
           peer = _this4.startPeer(signal.userId, false);
         }
 
@@ -78287,7 +78288,7 @@ function (_Component) {
     value: function render() {
       var _this6 = this;
 
-      console.log(this.state.users);
+      console.log('Barev');
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, this.state.users.map(function (user) {
         return user.id != _this6.props.userId ? react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: user.id

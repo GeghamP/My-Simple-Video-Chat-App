@@ -71,6 +71,7 @@ export default class App extends Component {
 			//for incoming calls
 			if(peer === undefined){
 				this.setState({toUserId: signal.userId});
+				alert('You have an incoming call');
 				peer = this.startPeer(signal.userId, false);
 			}
 			
@@ -126,7 +127,7 @@ export default class App extends Component {
 	}
 	
     render() {
-		console.log(this.state.users);
+		console.log('Barev');
         return (
 			<div>
 				{this.state.users.map((user) => {
